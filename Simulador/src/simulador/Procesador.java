@@ -6,7 +6,9 @@
 
 /**
  *
- * @author b24882
+ * @author 
+ * Daniel Orozco
+ * Diego González        
  */
 public class Procesador {
     int quantum;
@@ -30,6 +32,12 @@ public class Procesador {
         
     }
     
+    /**
+     * Este metodo se encarga de comprobar que instrucción se va a correr, y 
+     * llamar al método correspondiente
+     * 
+     * @param instruccion La dirección de memoria donde se encuentra la instrucción
+     */
     public void correrInstruccion(int instruccion){
         int v1 = instruccion - 128;
         int v2 = instruccion - 127;
@@ -71,9 +79,22 @@ public class Procesador {
         }
     }
     
+    /**Se encarga de sumar el valor del registro RY con un inmediato n, y 
+     * guardarlo en el registro RX
+     * 
+     * @param RX Registro de destino
+     * @param RY Registro sumando
+     * @param n immediato sumando 
+     */
     public void DADDI(int RX, int RY, int n){
-        if(RX == 0){
-            
+        //Si el registro RX es el destino, o si uno de los registros no es
+        //valido hay error
+        if(RX == 0 && esValido(RX) && esValido(RY)){
+            //Aqui va el error
+        }
+        else{
+            Registro[RX] = Registro[RY] + n;    //Realiza el DADDI
+            PC +=4;                             //Suma 4 al PC para pasar a la siguiente instruccion
         }
     }
     
@@ -111,6 +132,13 @@ public class Procesador {
     
     public void FIN(int v2, int v3, int v4){
     
+    }
+    
+    public boolean esValido(int RX){
+        if(RX >= 0 && RX <= 32)
+            return true;
+        else
+            return false;
     }
     
 }
