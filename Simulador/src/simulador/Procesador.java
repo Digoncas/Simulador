@@ -89,7 +89,7 @@ public class Procesador {
     public void DADDI(int RX, int RY, int n){
         //Si el registro RX es el destino, o si uno de los registros no es
         //valido hay error
-        if(RX == 0 && esValido(RX) && esValido(RY)){
+        if(RX == 0 && !(esValido(RX) && esValido(RY))){
             //Aqui va el error
         }
         else{
@@ -98,16 +98,61 @@ public class Procesador {
         }
     }
     
-    public void DADD(int v2, int v3, int v4){
-    
+    /**Se encarga de sumar el valor del registro RY con el valor el registro
+     * RZ, y guardarlo en el registro RX
+     * 
+     * @param RX Registro de destino
+     * @param RY Registro sumando
+     * @param RZ Registro sumando 
+     */
+    public void DADD(int RX, int RY, int RZ){
+        //Si el registro RX es el destino, o si uno de los registros no es
+        //valido hay error
+        if(RX == 0 && !(esValido(RX) && esValido(RY) && esValido(RZ))){
+            //Aqui va el error
+        }
+        else{
+            Registro[RX] = Registro[RY] + Registro[RZ];    //Realiza el DADDI
+            PC +=4;                             //Suma 4 al PC para pasar a la siguiente instruccion
+        }
     }
     
-    public void DSUB(int v2, int v3, int v4){
-    
+    /**Se encarga de restarle al registro RY el valor del registro RZ y 
+     * almacenarlo en RX
+     * 
+     * @param RX Registro donde se guarda la resta
+     * @param RY Registro donde esta el minuendo 
+     * @param RZ Registro donde esta el sustraendo 
+     */
+    public void DSUB(int RX, int RY, int RZ){
+        //Si el registro RX es el destino, o si uno de los registros no es
+        //valido hay error
+        if(RX == 0 && !(esValido(RX) && esValido(RY) && esValido(RZ))){
+            //Aqui va el error
+        }
+        else{
+            Registro[RX] = Registro[RY] - Registro[RZ];    //Realiza el DADDI
+            PC +=4;                             //Suma 4 al PC para pasar a la siguiente instruccion
+        }
     }
     
-    public void DMUL(int v2, int v3, int v4){
-    
+    /**Se encarga de multiplicar los registros RY y RZ y guardar el producto en
+     * RZ
+     * 
+     * @param RX Registro donde se guarda el producto
+     * @param RY Registro donde esta el factor 
+     * @param RZ Registro donde esta el factor 
+     */
+    public void DMUL(int RX, int RY, int RZ){
+        //Si el registro RX es el destino, o si uno de los registros no es
+        //valido hay error
+        if(RX == 0 && !(esValido(RX) && esValido(RY) && esValido(RZ))){
+            //Aqui va el error
+        }
+        else{
+            Registro[RX] = Registro[RY] * Registro[RZ];    //Realiza el DADDI
+            PC +=4;                             //Suma 4 al PC para pasar a la siguiente instruccion
+        }
     }
     
     public void DDIV(int v2, int v3, int v4){
