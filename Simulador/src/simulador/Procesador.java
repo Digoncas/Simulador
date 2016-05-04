@@ -6,7 +6,9 @@
 
 /**
  *
- * @author b24882
+ * @author 
+ * Daniel Orozco
+ * Diego González        
  */
 public class Procesador {
     int quantum;
