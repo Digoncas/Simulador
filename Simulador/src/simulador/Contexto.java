@@ -8,6 +8,9 @@
  *
  * @author b24882
  */
+
+package simulador;
+
 public class Contexto {
     int Registros[][];    //Los 32 registros de cada uno de los 4 contexto
     
