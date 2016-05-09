@@ -8,6 +8,9 @@
  *
  * @author b24882
  */
+
+package simulador;
+
 public class MemCache {
     int etiqueta[];
     int memoria[][];

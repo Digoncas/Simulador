@@ -16,6 +16,8 @@ public class Simulador {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Administrador a = new Administrador();
+        a.correrProceso();
     }
     
 }
