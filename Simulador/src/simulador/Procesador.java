@@ -61,9 +61,11 @@ public class Procesador {
         int v2 = memCache.memoria[i][1];
         int v3 = memCache.memoria[i][2];        
         int v4 = memCache.memoria[i][3];
-        
+        System.out.println("Dentro de correrInstruccion");
+        System.out.println("v1 = "+v1);
         switch(v1){
             case 8:
+                System.out.println("Dentro de DADDI");
                 DADDI(v2, v3, v4);
                 break;
             case 32:
