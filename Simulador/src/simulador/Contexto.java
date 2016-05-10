@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package simulador;
 /**
  *
  * @author b24882
  */
+
+package simulador;
+
 public class Contexto {
     int Registros[][];    //Los 32 registros de cada uno de los 4 contexto
     

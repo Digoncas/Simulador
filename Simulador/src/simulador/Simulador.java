@@ -29,6 +29,8 @@ public class Simulador {
         procesador1.Registro[3] = 8;
         procesador1.Registro[4] = 4;
         procesador1.correrInstruccion(0);
+        Administrador a = new Administrador();
+        a.correrProceso();
     }
     
 }

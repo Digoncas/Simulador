@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package simulador;
 /**
  *
  * @author 
  * Daniel Orozco
  * Diego González        
  */
+
+package simulador;
+
 public class Procesador {
     int quantum;
     int PC;
@@ -240,6 +242,18 @@ public class Procesador {
         }
         else{
             return false;
+        }
+    }
+    
+    public void setMemoria(int valor, int pocision){
+        memPrincipal[pocision] = valor;
+    }
+    
+    public void imprimirMemoria(){
+        System.out.println("| DIR\t| CODIFICADO");
+        for(int i = 0; i < memPrincipal.length; i += 4){
+            System.out.print("| "+(i+128)+"\t| " + memPrincipal[i]+" "+ memPrincipal[i+1]+" "
+            + memPrincipal[i+2]+" "+ memPrincipal[i+3] + "\n");
         }
     }
     
