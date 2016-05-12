@@ -77,8 +77,10 @@ public class Procesador {
 
     public void errorDeCache(int instruccion) {
         int posicion = instruccion - 128;
+        int numeroBloque;
         for (int i = 0; i < 4; i++) {
-            memCache.setEtiqueta(i, instruccion);
+            numeroBloque = posicion / 16;
+            memCache.setEtiqueta(i, numeroBloque);
             for (int j = 0; j < 4; j++, instruccion++, posicion++) {
                 memCache.setMemoria(i, j, getMemoria(posicion));
             }
