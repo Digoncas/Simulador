@@ -143,84 +143,109 @@ public class Procesador {
         }
     }
 
-    /**
-     * Se encarga de sumar el valor del registro RY con un inmediato n, y
+     /**Se encarga de sumar el valor del registro RY con un inmediato n, y 
      * guardarlo en el registro RX
-     *
+     * 
      * @param RX Registro de destino
      * @param RY Registro sumando
-     * @param n immediato sumando
+     * @param n immediato sumando 
+     * Estado del metodo: Verificado
      */
-    public void DADDI(int RX, int RY, int n) {
+    public void DADDI(int RY, int RX, int n){
         //Si el registro RX es el destino, o si uno de los registros no es
         //valido hay error
-        if (RX == 0 && !(esValido(RX) && esValido(RY))) {
-            //Aqui va el error
-        } else {
+        if(!esDestinoValido(RX) || !esRegistroValido(RX) || !esRegistroValido(RY)){
+            System.out.println("Error: registro invalido");
+        }
+        else{
             Registro[RX] = Registro[RY] + n;    //Realiza el DADDI
-            PC += 4;                             //Suma 4 al PC para pasar a la siguiente instruccion
+            PC +=4;                             //Suma 4 al PC para pasar a la siguiente instruccion
+            System.out.println("Registro["+RX+"] = "+Registro[RX]);
         }
     }
-
-    /**
-     * Se encarga de sumar el valor del registro RY con el valor el registro RZ,
-     * y guardarlo en el registro RX
-     *
+    
+    /**Se encarga de sumar el valor del registro RY con el valor el registro
+     * RZ, y guardarlo en el registro RX
+     * 
      * @param RX Registro de destino
      * @param RY Registro sumando
-     * @param RZ Registro sumando
+     * @param RZ Registro sumando 
+     * Estado del metodo: Verificado
      */
-    public void DADD(int RX, int RY, int RZ) {
+    public void DADD(int RX, int RY, int RZ){
         //Si el registro RX es el destino, o si uno de los registros no es
         //valido hay error
-        if (RX == 0 && !(esValido(RX) && esValido(RY) && esValido(RZ))) {
-            //Aqui va el error
-        } else {
+        if(!esDestinoValido(RX) || !(esRegistroValido(RX) || !esRegistroValido(RY))){
+            System.out.println("Error: registro invalido");
+        }
+        else{
             Registro[RX] = Registro[RY] + Registro[RZ];    //Realiza el DADDI
-            PC += 4;                             //Suma 4 al PC para pasar a la siguiente instruccion
+            PC +=4;                             //Suma 4 al PC para pasar a la siguiente instruccion
+            System.out.println("Registro["+RX+"] = "+Registro[RX]);
         }
     }
-
-    /**
-     * Se encarga de restarle al registro RY el valor del registro RZ y
+    
+    /**Se encarga de restarle al registro RY el valor del registro RZ y 
      * almacenarlo en RX
-     *
+     * 
      * @param RX Registro donde se guarda la resta
-     * @param RY Registro donde esta el minuendo
-     * @param RZ Registro donde esta el sustraendo
+     * @param RY Registro donde esta el minuendo 
+     * @param RZ Registro donde esta el sustraendo 
+     * Estado del metodo: Verificado
      */
-    public void DSUB(int RX, int RY, int RZ) {
+    public void DSUB(int RX, int RY, int RZ){
         //Si el registro RX es el destino, o si uno de los registros no es
         //valido hay error
-        if (RX == 0 && !(esValido(RX) && esValido(RY) && esValido(RZ))) {
-            //Aqui va el error
-        } else {
+        if(!esDestinoValido(RX) || !(esRegistroValido(RX) || !esRegistroValido(RY))){
+            System.out.println("Error: registro invalido");
+        }
+        else{
             Registro[RX] = Registro[RY] - Registro[RZ];    //Realiza el DADDI
-            PC += 4;                             //Suma 4 al PC para pasar a la siguiente instruccion
+            PC +=4;                             //Suma 4 al PC para pasar a la siguiente instruccion
+            System.out.println("Registro["+RX+"] = "+Registro[RX]);
         }
     }
-
-    /**
-     * Se encarga de multiplicar los registros RY y RZ y guardar el producto en
+    
+    /**Se encarga de multiplicar los registros RY y RZ y guardar el producto en
      * RZ
-     *
+     * 
      * @param RX Registro donde se guarda el producto
-     * @param RY Registro donde esta el factor
-     * @param RZ Registro donde esta el factor
+     * @param RY Registro donde esta el factor 
+     * @param RZ Registro donde esta el factor 
+     * Estado del metodo: Verificado
      */
-    public void DMUL(int RX, int RY, int RZ) {
+    public void DMUL(int RX, int RY, int RZ){
         //Si el registro RX es el destino, o si uno de los registros no es
         //valido hay error
-        if (RX == 0 && !(esValido(RX) && esValido(RY) && esValido(RZ))) {
-            //Aqui va el error
-        } else {
+        if(!esDestinoValido(RX) || !(esRegistroValido(RX) || !esRegistroValido(RY))){
+            System.out.println("Error: registro invalido");
+        }
+        else{
             Registro[RX] = Registro[RY] * Registro[RZ];    //Realiza el DADDI
-            PC += 4;                             //Suma 4 al PC para pasar a la siguiente instruccion
+            PC +=4;                             //Suma 4 al PC para pasar a la siguiente instruccion
+            System.out.println("Registro["+RX+"] = "+Registro[RX]);
         }
     }
-
-    public void DDIV(int v2, int v3, int v4) {
-        PC += 4;
+    
+    /**Se encarga de dividir los registros RY y RZ y guardar el producto en
+     * RX
+     * 
+     * @param RX Registro donde se guarda el producto
+     * @param RY Registro donde esta el factor 
+     * @param RZ Registro donde esta el factor 
+     * Estado del metodo: Verificado
+     */
+    public void DDIV(int RX, int RY, int RZ){
+        //Si el registro RX es el destino, o si uno de los registros no es
+        //valido hay error
+        if(!esDestinoValido(RX) || !(esRegistroValido(RX) || !esRegistroValido(RY))){
+            System.out.println("Error: registro invalido");
+        }
+        else{
+            Registro[RX] = Registro[RY] / Registro[RZ];    //Realiza el DADDI
+            PC +=4;                             //Suma 4 al PC para pasar a la siguiente instruccion
+            System.out.println("Registro["+RX+"] = "+Registro[RX]);
+        }
     }
 
     public void BEQZ(int v2, int v3, int v4) {
@@ -276,4 +301,22 @@ public class Procesador {
         Registro[registro] = valor;
     }
 
+        public boolean esRegistroValido(int RX){
+        if(RX >= 0 && RX <= 32){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    public boolean esDestinoValido(int RX){
+        if(RX != 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
 }
