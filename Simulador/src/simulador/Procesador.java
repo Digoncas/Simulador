@@ -49,10 +49,12 @@ public class Procesador {
     }
 
     public void correrPrograma() {
-        for (int i = 0; i < quantum || contexto.estaCorriendo(contadorPrograma); i++) {
+        for (int i = 0; i < quantum && contexto.estaCorriendo(contadorPrograma); i++) {
             int posicionCache = memCache.estaInstruccion(PC);
             if (posicionCache == -1) {
                 errorDeCache(PC);
+                posicionCache = memCache.estaInstruccion(PC);
+                correrInstruccion(PC, posicionCache);
             }
             correrInstruccion(PC, posicionCache);
         }
