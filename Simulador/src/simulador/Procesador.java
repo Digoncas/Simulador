@@ -83,7 +83,7 @@ public class Procesador {
         for (int i = 0; i < 4; i++) {
             numeroBloque = posicion / 16;
             memCache.setEtiqueta(i, numeroBloque);
-            for (int j = 0; j < 4; j++, instruccion++, posicion++) {
+            for (int j = 0; j < 4; j++, posicion++) {
                 memCache.setMemoria(i, j, getMemoria(posicion));
             }
         }

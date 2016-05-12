@@ -13,14 +13,14 @@ package simulador;
 public class MemCache {
 
     int etiqueta[];
-    int memoria[][];
+    Palabra memoria[][];
 
     MemCache() {
         etiqueta = new int[4];
         for (int i = 0; i < etiqueta.length; i++) {
             etiqueta[i] = -1;
         }
-        memoria = new int[4][4];
+        memoria = new Palabra[4][4];
     }
 
     /**
@@ -31,7 +31,10 @@ public class MemCache {
      */
     public int estaInstruccion(int direccion) {
         int retorno = -1;
+        int posicion ;
+        int numeroBloque;
         for (int i = 0; i < etiqueta.length; i++) {
+            numeroBloque = direccion - 128;
             if (direccion == etiqueta[i]) {
                 retorno = i;
             }
