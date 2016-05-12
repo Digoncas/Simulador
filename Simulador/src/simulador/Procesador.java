@@ -35,7 +35,7 @@ public class Procesador {
     }
 
     public void ejecutarProgramas() {
-        while (contexto.hayProcecesosCorriendo()) {
+        while (contexto.hayProcesosCorriendo()) {
             if(contexto.estaCorriendo(contadorPrograma)){
                 cargarContexto(contadorPrograma);
                 correrPrograma();
@@ -56,7 +56,9 @@ public class Procesador {
                 posicionCache = memCache.estaInstruccion(PC);
                 correrInstruccion(PC, posicionCache);
             }
-            correrInstruccion(PC, posicionCache);
+            else{
+                correrInstruccion(PC, posicionCache);
+            }
         }
         guardarContexto();
     }
@@ -71,7 +73,7 @@ public class Procesador {
     public void guardarContexto() {
          contexto.setPC(contadorPrograma, PC);
          for(int i = 0; i < 32; i++){
-             contexto.setRegistro(PC, i, Registro[i]);
+             contexto.setRegistro(contadorPrograma, i, Registro[i]);
          }
     }
 
@@ -172,7 +174,7 @@ public class Procesador {
      * @param RZ Registro sumando 
      * Estado del metodo: Verificado
      */
-    public void DADD(int RX, int RY, int RZ){
+    public void DADD(int RY, int RZ, int RX){
         //Si el registro RX es el destino, o si uno de los registros no es
         //valido hay error
         if(!esDestinoValido(RX) || !(esRegistroValido(RX) || !esRegistroValido(RY))){
@@ -193,7 +195,7 @@ public class Procesador {
      * @param RZ Registro donde esta el sustraendo 
      * Estado del metodo: Verificado
      */
-    public void DSUB(int RX, int RY, int RZ){
+    public void DSUB(int RY, int RZ, int RX){
         //Si el registro RX es el destino, o si uno de los registros no es
         //valido hay error
         if(!esDestinoValido(RX) || !(esRegistroValido(RX) || !esRegistroValido(RY))){
@@ -214,7 +216,7 @@ public class Procesador {
      * @param RZ Registro donde esta el factor 
      * Estado del metodo: Verificado
      */
-    public void DMUL(int RX, int RY, int RZ){
+    public void DMUL(int RY, int RZ, int RX){
         //Si el registro RX es el destino, o si uno de los registros no es
         //valido hay error
         if(!esDestinoValido(RX) || !(esRegistroValido(RX) || !esRegistroValido(RY))){
@@ -235,14 +237,14 @@ public class Procesador {
      * @param RZ Registro donde esta el factor 
      * Estado del metodo: Verificado
      */
-    public void DDIV(int RX, int RY, int RZ){
+    public void DDIV(int RY, int RZ, int RX){
         //Si el registro RX es el destino, o si uno de los registros no es
         //valido hay error
         if(!esDestinoValido(RX) || !(esRegistroValido(RX) || !esRegistroValido(RY))){
             System.out.println("Error: registro invalido");
         }
         else{
-            Registro[RX] = Registro[RY] / Registro[RZ];    //Realiza el DADDI
+            Registro[RX] = Registro[RY] / Registro[RZ];    //Realiza el DDIV
             PC +=4;                             //Suma 4 al PC para pasar a la siguiente instruccion
             System.out.println("Registro["+RX+"] = "+Registro[RX]);
         }
@@ -317,6 +319,10 @@ public class Procesador {
         else{
             return false;
         }
+    }
+    
+    public void setEstaCorriendo(int proceso) {
+        contexto.setEstaCorriendo(proceso);
     }
     
 }

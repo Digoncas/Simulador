@@ -48,6 +48,7 @@ public class Administrador {
                     = new BufferedReader(fileReader);
 
             p.guardarPC(contador + 128);
+            p.setEstaCorriendo(0);
             while ((line = bufferedReader.readLine()) != null) {
                 System.out.println(line);
                 guardarInstruccion(line, p, contador);

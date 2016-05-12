@@ -39,10 +39,10 @@ public class Contexto {
         return Registros[proceso][registro+1];
     }
 
-    public boolean hayProcecesosCorriendo() {
+    public boolean hayProcesosCorriendo() {
         boolean retorno = false;
         for (int i = 0; i < estaCorriendo.length; i++) {
-            if (estaCorriendo[i] = true) {
+            if (estaCorriendo[i] == true) {
                 retorno = true;
             }
         }
@@ -55,6 +55,10 @@ public class Contexto {
 
     public boolean estaCorriendo(int proceso) {
         return estaCorriendo[proceso];
+    }
+    
+    public void setEstaCorriendo(int proceso) {
+        estaCorriendo[proceso] = true;
     }
 
 }
