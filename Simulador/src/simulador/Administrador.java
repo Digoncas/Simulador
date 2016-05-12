@@ -26,11 +26,13 @@ public class Administrador {
     public void correrProceso(){
         Procesador p1 = new Procesador(20);
         int contador = 0;
-        leerArchivo("1.txt", p1, 0);
+        contador = leerArchivo("src/simulador/1.txt", p1, contador);
         p1.imprimirMemoria();
+        p1.correrPrograma();
+        
     }
     
-    public void leerArchivo(String nombreDelArchivo, Procesador p, int contador){
+    public int leerArchivo(String nombreDelArchivo, Procesador p, int contador){
         // Nombre del archivo
         String fileName = nombreDelArchivo;
 
@@ -45,7 +47,8 @@ public class Administrador {
             // Always wrap FileReader in BufferedReader.
             BufferedReader bufferedReader = 
                 new BufferedReader(fileReader);
-
+            
+            p.guardarPC(contador+128);
             while((line = bufferedReader.readLine()) != null) {
                 System.out.println(line);
                 guardarInstruccion(line, p, contador);
@@ -67,6 +70,7 @@ public class Administrador {
             // Or we could just do this: 
             // ex.printStackTrace();
         }
+        return contador;
     }
     
     public void guardarInstruccion(String linea, Procesador p, int direccion){

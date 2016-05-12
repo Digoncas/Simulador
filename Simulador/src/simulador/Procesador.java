@@ -21,6 +21,7 @@ public class Procesador {
     int memPrincipal[] = new int[256];
     Contexto contexto;
     boolean termino;
+    int contadorPrograma;   //Lleva el control del número de hilillos corriendo, no confundir con el PC
     
     Procesador(int quantum){
         this.quantum = quantum;
@@ -28,11 +29,33 @@ public class Procesador {
         memCache = new MemCache();
         memPrincipal = new int[256];
         contexto = new Contexto();
-        
+        contadorPrograma = 0;
     }
     
-    public void agregarInstrucciones(){
-        
+    public void guardarPC(int PC){
+        contexto.setPC(contadorPrograma, PC);
+    }
+    
+    public void correrPrograma(){
+        PC = 128;
+        while(contexto.hayProcecesosCorriendo()){
+            int posicionCache = memCache.estaInstruccion(PC);
+            if (posicionCache != -1){
+                correrInstruccion(PC, posicionCache);
+            }else{
+                errorDeCache(PC);
+            }
+        }
+    }
+    
+    public void errorDeCache(int instruccion){
+        int posicion = instruccion - 128;
+        for(int i = 0; i < 4; i++){
+            memCache.setEtiqueta(i, instruccion);
+            for(int j = 0; j < 4; j++, instruccion++, posicion++){
+                memCache.setMemoria(i, j, getMemoria(posicion));
+            }
+        }
     }
     
     /**
@@ -41,41 +64,51 @@ public class Procesador {
      * 
      * @param instruccion La dirección de memoria donde se encuentra la instrucción
      */
-    public void correrInstruccion(int instruccion){
-        int v1 = instruccion - 128;
-        int v2 = instruccion - 127;
-        int v3 = instruccion - 126;        
-        int v4 = instruccion - 125;
+    public void correrInstruccion(int instruccion, int posicionCache){
+        int v1 = memCache.getMemoria(posicionCache, 0);
+        int v2 = memCache.getMemoria(posicionCache, 1);
+        int v3 = memCache.getMemoria(posicionCache, 2);
+        int v4 = memCache.getMemoria(posicionCache, 3);
         
         switch(v1){
             case 8:
+                System.out.println("DADDI");
                 DADDI(v2, v3, v4);
                 break;
             case 32:
+                System.out.println("DADD");
                 DADD(v2, v3, v4);
                 break;
             case 34:
+                System.out.println("DSUB");
                 DSUB(v2, v3, v4);
                 break;
             case 12:
+                System.out.println("DMUL");
                 DMUL(v2, v3, v4);
                 break;
             case 14:
+                System.out.println("DDIV");
                 DDIV(v2, v3, v4);
                 break;
             case 4:
+                System.out.println("BEQZ");
                 BEQZ(v2, v3, v4);
                 break;
             case 5:
+                System.out.println("BENZ");
                 BENZ(v2, v3, v4);
                 break;
             case 3:
+                System.out.println("JAL");
                 JAL(v2, v3, v4);
                 break;
             case 2:
+                System.out.println("JR");
                 JR(v2, v3, v4);
                 break;
             case 63:
+                System.out.println("FIN");
                 FIN(v2, v3, v4);
                 break;
                 
@@ -179,7 +212,7 @@ public class Procesador {
     }
     
     public void FIN(int v2, int v3, int v4){
-    
+        contexto.terminarProceso(contadorPrograma);
     }
     
     public boolean esValido(int RX){
@@ -191,6 +224,10 @@ public class Procesador {
     
     public void setMemoria(int valor, int pocision){
         memPrincipal[pocision] = valor;
+    }
+    
+    public int getMemoria(int pocision){
+        return memPrincipal[pocision];
     }
     
     public void imprimirMemoria(){
